@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="description" content="neocathedral* - Personal site of daniél, software engineer working on data archiving solutions">
+   <link rel="icon" href="https://i.imgur.com/HQLoCZu.png">
+   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+   <title>neocathedral* - daniél</title>
+   <style>
+       :root {
+           --width: 720px;
+           --font-main: 'Share Tech Mono', monospace;
+           --background-color: #0a0a0a;
+           --text-color: #67E99F;
+           --link-color: #ffe88c;
+           --scanline-color: rgba(0, 255, 0, 0.1);
+           font-size: 133%;
+           --width: 960px; 
+       }
+
+       @keyframes scanline {
+           0% {
+               transform: translateY(-100%);
+           }
+           100% {
+               transform: translateY(100%);
+           }
+       }
+
+       @keyframes blink {
+           0%, 100% { opacity: 1; }
+           50% { opacity: 0; }
+       }
+
+       @keyframes vhs-tracking {
+           0% { transform: translateY(0); }
+           50% { transform: translateY(-1px); }
+           51% { transform: translateY(1px); }
+           100% { transform: translateY(0); }
+       }
+
+       * {
+           margin: 0;
+           padding: 0;
+           box-sizing: border-box;
+       }
+
+       body {
+           font-family: var(--font-main);
+           margin: auto;
+           padding: 15px 20px 20px 20px;
+           max-width: var(--width);
+           text-align: left;
+           background-color: var(--background-color);
+           color: var(--text-color);
+           line-height: 1.5;
+           position: relative;
+           text-shadow: 0 0 5px rgba(51, 255, 51, 0.5);
+           overflow-x: hidden;
+           animation: flicker 0.3s infinite;
+       }
+
+       body::before {
+           content: "";
+           position: fixed;
+           top: 0;
+           left: 0;
+           width: 100%;
+           height: 100%;
+           background: linear-gradient(
+               rgba(18, 16, 16, 0) 50%,
+               rgba(0, 0, 0, 0.4) 50%
+           ),
+           linear-gradient(
+               90deg,
+               rgba(255, 0, 0, 0.2),
+               rgba(0, 255, 0, 0.05),
+               rgba(0, 0, 255, 0.2)
+           );
+           background-size: 100% 3px, 6px 100%;
+           pointer-events: none;
+           z-index: 1;
+       }
+
+       body::after {
+           content: "";
+           position: fixed;
+           top: 0;
+           left: 0;
+           width: 100%;
+           height: 100%;
+           background: repeating-linear-gradient(
+               0deg,
+               rgba(0, 0, 0, 0.3),
+               rgba(0, 0, 0, 0.3) 1px,
+               transparent 2px,
+               transparent 4px
+           );
+           pointer-events: none;
+           animation: scanline 4s linear infinite;
+           opacity: 0.7;
+           z-index: 2;
+       }
+
+       main {
+           position: relative;
+           border: 2px solid var(--text-color);
+           padding: 0px 20px 20px 20px;
+           box-shadow: 0 0 10px rgba(51, 255, 51, 0.3),
+                      inset 0 0 30px rgba(51, 255, 51, 0.1);
+           background: rgba(0, 0, 0, 0.2);
+           z-index: 0;
+       }
+
+       h2 {
+           color: var(--text-color);
+           font-size: min(2.5rem, 8vw);
+           margin-bottom: 2rem;
+           border-bottom: 1px solid var(--text-color);
+           animation: glitch 5s infinite;
+           word-break: break-word;
+           overflow-wrap: break-word;
+           line-height: 1.2;
+           padding: 0.5rem 0; 
+       }
+       
+       h2::after {
+           content: "_";
+           animation: blink 1s step-end infinite;
+       }
+
+       .content-block {
+           margin: 1.2rem 0;
+           padding-left: 20px;
+           position: relative;
+           animation: glitch 5s infinite;
+       }
+
+       .content-block::before {
+           content: ">";
+           position: absolute;
+           left: 0;
+           color: var(--text-color);
+       }
+
+       a {
+           color: var(--link-color);
+           text-decoration: none;
+           transition: all 0.2s ease;
+           position: relative;
+       }
+
+       a:hover {
+           text-decoration: none;
+           color: var(--text-color);
+           text-shadow: 0 0 8px var(--text-color);
+       }
+
+       ul {
+           list-style-type: none;
+           margin: 1rem 0;
+           display: grid;
+           grid-template-columns: repeat(2, 1fr);
+           gap: 0.5rem 2rem;
+       }
+
+       li::before {
+           content: "📁 ";
+           color: var(--link-color);
+       }
+
+       .two-column-layout {
+           display: grid;
+           grid-template-columns: 1fr 1fr;
+           gap: 2rem;
+           align-items: start;
+           margin: 1.2rem 0;
+       }
+
+       .links {
+           display: flex;
+           flex-direction: column;
+           gap: 0.5rem;
+           margin: 0;
+       }
+       .links a:hover {
+           text-decoration: none;
+           color: var(--text-color);
+           text-shadow: 0 0 8px var(--text-color);
+           border: 1px solid var(--text-color);
+       }
+       /* .links:hover {
+           border: 1px solid var(--text-color);
+       } */
+
+       .links a::before {
+           content: "$ ";
+           color: var(--text-color);
+       }
+
+       img {
+           position: relative;
+           max-width: 100%;
+           height: 200px;
+           margin: 0;
+           filter: sepia(100%) hue-rotate(60deg) brightness(0.8) contrast(1.5);
+           animation: vhs-tracking 4s linear infinite;
+           display: block;
+       }
+
+       img::after {
+           content: "";
+           position: absolute;
+           top: 0;
+           left: 0;
+           width: 100%;
+           height: 100%;
+           background: linear-gradient(
+               rgba(18, 16, 16, 0) 50%,
+               rgba(0, 0, 0, 0.25) 50%
+           );
+           background-size: 100% 2px;
+           pointer-events: none;
+       }
+
+       .footnote {
+           font-size: 0.6rem;
+           border-top: 1px solid var(--text-color);
+           padding-top: 20px;
+           margin-top: 2rem;
+           opacity: 0.8;
+           animation: glitch 7s infinite;
+           font-style: italic;
+       }
+
+       @media (max-width: 767px) {
+           :root {
+               font-size: 100%;
+           }
+           
+           h2 {
+               font-size: 1.8rem;
+               margin-bottom: 1.5rem;
+           }
+           
+           main {
+               padding: 15px;
+               margin: 0.5rem;
+           }
+       }
+   </style>
+</head>
+<body>
+   <main>
+       <h2>welcome to the neocathedral*</h2>
+       
+       <div class="content-block">
+           Hi, I'm Daniel, btw it spells: ðaˈnjɛl.
+       </div>
+
+       <div class="content-block">
+           <a>cat</a> bio.txt<br>
+           Software engineer based in Spain.<br>
+           Working on data archiving solutions for german big corp.<br>
+       </div>
+
+       <div class="content-block">
+           <a>ls</a> /interested_in:
+           <ul>
+               <li>data archiving</li>
+               <li>robotics</li>
+               <li>apps on LLMs</li>
+               <li>philosophy</li>
+               <li>avionics</li>
+           </ul>
+       </div>
+
+       <div class="content-block">
+           <a>exec</a> do_stuff.sh
+       </div>
+
+       <div class="two-column-layout">
+           <div class="links">
+               <a href="https://x.com/neocathedral" target="_blank" rel="noopener">x.com</a>
+               <a href="https://github.com/f-n-ll" target="_blank" rel="noopener">github</a>
+               <a href="https://buymeacoffee.com/daniel_neocathedral" target="_blank" rel="noopener">buy me a coffee!!</a>
+               <a href="https://neocathedral.bearblog.dev/blog/" target="_blank" rel="noopener">journal</a>
+               <a href="not_yet" target="_blank" rel="noopener">cv</a>
+           </div>
+
+           <img src="https://s13.gifyu.com/images/SJAJt.gif" alt="clout_profile" loading="lazy">
+       </div>
+       
+       <p class="footnote">
+           * The Cathedral refers to elite universities, media, and bureaucracies working together to promote and enforce progressive orthodoxy - like a modern secular church that shapes acceptable opinion and punishes dissenters through social pressure rather than explicit coordination. Think Harvard, New York Times, and civil service acting as unofficial ideological gatekeepers. I belong not to this but of a new upgraded and different gen, aiming to build our own Neocathedral, for the better.
+       </p>
+   </main>
+</body>
+</html>
